@@ -1,0 +1,23 @@
+LDA DADO01     ; Carrega BCD ex: 24h
+MOV B, A
+ANI 0F0H
+RRC
+RRC
+RRC
+RRC            ; Parte alta em A
+MOV C, A
+MVI A, 0AH
+MUL_LOOP_HI:   ; Multiplica C por 10
+DCR C
+ADD 0AH
+JNZ MUL_LOOP_HI
+MOV D, A       ; D = parte alta * 10
+
+MOV A, B
+ANI 0FH        ; Parte baixa
+ADD D
+STA DADO02
+HLT
+
+DADO01: DB 24H
+DADO02: DS 1

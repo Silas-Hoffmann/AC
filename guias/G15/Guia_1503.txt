@@ -1,0 +1,28 @@
+; dado01 em 0100h
+; dado02 em 0101h
+; dado03 em 0102h
+; dado04 em 0103h
+; resultado em 0104h
+
+LXI H,0100h
+MOV A, M        ; A = dado01
+
+INX H
+MOV B, M
+SUB B
+DAA             ; ajustar BCD
+
+INX H
+MOV B, M
+SUB B
+DAA
+
+INX H
+MOV B, M
+ADD B
+DAA
+
+INX H
+MOV M, A
+
+HLT

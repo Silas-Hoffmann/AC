@@ -1,0 +1,1 @@
+Nessa pasta está todos os modelos JFLAP do Guia 10. Também exportei em formato de imagem, para que possa ser visualizado mesmo sem o programa jflap. A pasta também possui o Guia_10.txt com as respostas de cada questão.

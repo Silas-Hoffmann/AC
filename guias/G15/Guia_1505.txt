@@ -1,0 +1,19 @@
+; dado01 em 0100h
+; dado02 em 0101h
+; resultado em 0102h
+
+LXI H,0100h
+MOV A, M
+ADD A
+ADD A           ; A = dado01 * 4
+ADD A           ; A = dado01 * 8
+
+LXI H,0101h
+MOV B, M
+RAR             ; divide por 2 (com sinal: cuidado)
+
+ADD B
+
+LXI H,0102h
+MOV M, A
+HLT

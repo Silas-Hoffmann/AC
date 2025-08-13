@@ -1,0 +1,25 @@
+; Multiplicação de 8 bits com resultado de 16 bits
+LXI H, 0000H   ; Resultado = 0
+LDA DADO01     ; Multiplicador
+MOV C, A       ; C = dado01
+LDA DADO02     ; Multiplicando
+MOV B, A       ; B = dado02
+
+MUL_LOOP:      ; Loop da multiplicação
+DCR C
+MOV A, L
+ADD B
+MOV L, A
+MOV A, H
+ACI 00H
+MOV H, A
+MOV A, C
+ORA A
+JNZ MUL_LOOP
+
+SHLD DADO03    ; Armazena resultado (16 bits)
+HLT
+
+DADO01: DB 05H
+DADO02: DB 04H
+DADO03: DS 2     ; Reserva 2 bytes

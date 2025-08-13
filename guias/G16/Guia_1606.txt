@@ -1,0 +1,19 @@
+LDA DADO01
+MOV B, A       ; Contador
+MVI C, 01H     ; Primeiro ímpar
+MVI D, 00H     ; Resultado
+
+QUAD_LOOP:
+MOV A, D
+ADD C
+MOV D, A
+ADI 02H        ; Próximo ímpar
+MOV C, A
+DCR B
+JNZ QUAD_LOOP
+
+STA DADO02
+HLT
+
+DADO01: DB 05H
+DADO02: DS 1

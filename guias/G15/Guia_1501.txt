@@ -1,0 +1,19 @@
+; dado01 em 0100h
+; dado02 em 0101h
+; dado03 em 0102h
+; resultado em 0103h
+
+LXI H,0100h     ; HL <- 0100h (endereço de dado01)
+MOV A, M        ; A <- MEM[0100h] (A = dado01)
+INX H           ; HL = 0101h
+MOV B, M        ; B <- MEM[0101h] (B = dado02)
+SUB B           ; A = A - B
+
+INX H           ; HL = 0102h
+MOV B, M        ; B <- MEM[0102h] (B = dado03)
+ADD B           ; A = A + B
+
+INX H           ; HL = 0103h
+MOV M, A        ; MEM[0103h] <- A
+
+HLT             ; parar

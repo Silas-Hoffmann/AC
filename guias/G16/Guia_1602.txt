@@ -1,0 +1,24 @@
+LDA DADO01     ; A = dividendo
+MOV B, A
+LDA DADO02     ; A = divisor
+MOV C, A
+MVI D, 00H     ; Quociente = 0
+
+DIV_LOOP:
+MOV A, B
+CMP C
+JC FIM_DIV
+MOV A, B
+SUB C
+MOV B, A
+INR D
+JMP DIV_LOOP
+
+FIM_DIV:
+MOV A, D
+STA DADO03
+HLT
+
+DADO01: DB 14H
+DADO02: DB 05H
+DADO03: DS 1

@@ -1,0 +1,20 @@
+LXI H, DADOS
+MOV A, M       ; A = primeiro elemento
+INX H
+MVI C, 04H     ; 4 comparações (5 elementos no total)
+
+MAIOR_LOOP:
+CMP M
+JC CONTINUA
+MOV A, M
+
+CONTINUA:
+INX H
+DCR C
+JNZ MAIOR_LOOP
+
+STA MAIOR
+HLT
+
+DADOS: DB 14H, 25H, 0FH, 35H, 19H
+MAIOR: DS 1

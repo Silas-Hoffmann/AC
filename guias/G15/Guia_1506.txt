@@ -1,0 +1,21 @@
+; dado01 em 0100h
+; dado02 em 0101h
+; resultado em 0102h
+
+LXI H,0100h
+MOV A, M
+ADD A
+ADD M           ; 3 * dado01
+
+LXI H,0101h
+MOV B, M
+ADD B
+ADD B           ; 4 * dado02
+
+MOV C, A        ; C = 3*dado01
+MOV A, C
+SUB B
+
+LXI H,0102h
+MOV M, A
+HLT

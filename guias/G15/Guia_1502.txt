@@ -1,0 +1,61 @@
+; dado01 em 0100h-0101h (LSB-MSB)
+; dado02 em 0102h-0103h
+; dado03 em 0104h-0105h
+; dado04 em 0106h-0107h
+; resultado em 0108h-0109h
+
+LXI H,0100h     ; HL -> dado01
+MOV D, M        ; D = LSB
+INX H
+MOV E, M        ; E = MSB
+; DE = dado01
+
+INX H           ; HL -> dado02
+INX H
+MOV A, M
+MOV B, A
+INX H
+MOV A, M
+MOV C, A
+; BC = dado02
+
+DAD D           ; HL = DE + BC
+
+; resultado parcial em HL
+
+LXI D,0104h
+MOV A, M
+MOV E, A
+INX D
+MOV A, M
+MOV D, A
+; DE = dado03
+
+; Faz complemento de 2
+MOV A, E
+CMA
+MOV E, A
+MOV A, D
+CMA
+MOV D, A
+INX D           ; DE = -dado03
+
+DAD D           ; soma com -dado03
+
+; Adiciona dado04
+LXI D,0106h
+MOV A, M
+MOV E, A
+INX D
+MOV A, M
+MOV D, A
+; DE = dado04
+
+DAD D           ; HL = total
+
+; Armazena resultado em 0108h-0109h
+LXI D,0108h
+MOV M, L
+INX D
+MOV M, H
+HLT

@@ -1,0 +1,17 @@
+; dado01 em 0100h
+; dado02 em 0101h
+; resultado em 0102h
+
+LXI H,0100h
+MOV A, M
+ANI 01h         ; A = dado01 % 2
+
+LXI H,0101h
+MOV B, M
+RAR             ; divide por 2
+RAR             ; divide por 4
+ADD B
+
+LXI H,0102h
+MOV M, A
+HLT
