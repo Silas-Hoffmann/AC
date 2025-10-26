@@ -1,0 +1,85 @@
+1 a) SoP(a,b,c,d) = (2, 3, 5, 7, 9, A, B, D) = (a′b′cd′) + (a′b′cd) + (a′bc′d) + (a′bcd) + (ab′c′d) + (ab′cd′) + (ab′cd) + (abc′d)
+
+1 b) PoS(a,b,c,d) = (0, 1, 4, 6, 8, C, E, F) = (a+b+c+d) . (a+b+c+d′) . (a+b′+c+d) . (a+b′+c′+d) . (a′+b+c+d) . (a′+b′+c+d) . (a′+b′+c′+d) . (a′+b′+c′+d′)
+
+1 c) SoP(a,b,c,d) = (a'b'c) + (a'b d) + (a b' c) + (a c' d)
+
+1 d) PoS(a,b,c,d) = (c+d) . (a′+b′+c′) . (a+b+c) . (b′+c′+d)
+
+1 e)
+T1 = (a'b'c) = ((a NAND a) NAND (b NAND b) NAND c) NAND ((a NAND a) NAND (b NAND b) NAND c)
+T2 = (a'bd) = ((a NAND a) NAND b NAND d) NAND ((a NAND a) NAND b NAND d)
+T3 = (ab'c) = (a NAND (b NAND b) NAND c) NAND (a NAND (b NAND b) NAND c)
+T4 = (ac'd) = (a NAND (c NAND c) NAND d) NAND (a NAND (c NAND c) NAND d)
+R = (((T1​ NAND T1​) NAND (T2​ NAND T2​)) NAND ((T3​ NAND T3​) NAND (T4​ NAND T4​)))
+
+1 f)
+T1 = (c+d) = (c NAND c) NAND (d NAND d)
+T2 = (a′+b′+c′) = ((a NAND a) NAND (b NAND b)) NAND (c NAND c)
+T3 = (a+b+c) = ((a NAND a) NAND (b NAND b)) NAND (c NAND c)
+T4 = (b′+c′+d) = ((b NAND b) NAND (c NAND c)) NAND (d NAND d)
+R = [(T1​ NAND T2​ NAND T3​ NAND T4​)] NAND [(T1​ NAND T2​ NAND T3​ NAND T4​)]
+
+2 a)
+| a b c | s |
+-------------
+| 0 0 0 | 0 |
+| 0 0 1 | 0 |
+| 0 1 0 | 0 |
+| 0 1 1 | 0 |
+| 1 0 0 | 1 |
+| 1 0 1 | 1 |
+| 1 1 0 | 1 |
+| 1 1 1 | 0 |
+
+2 b) SoP = (a,b,c) = (a . b' . c) + (a . c') => a . (b' + c') => (a NAND a) NAND (b' NAND c')
+module f_nand (output s, input a, input b, input c);
+  wire nb, nc, or_bc, nand_final;
+  nand N1(nb, b, b);       // b'
+  nand N2(nc, c, c);       // c'
+  nand N3(or_bc, nb, nc);  // (b . c)
+  nand N4(s, a, or_bc);    // a . (b' + c')
+endmodule
+
+2 c) PoS = (a,b,c) = (a + b) . (a + c')
+module f_pos (output s, input a, input b, input c);
+  wire nc, or1, or2;
+  not NOT1(nc, c);         // nc = ~c
+  or  OR1(or1, a, b);      // (a + b)
+  or  OR2(or2, a, nc);     // (a + c')
+  and AND1(s, or1, or2);   // (a + b)(a + c')
+endmodule
+
+2 d) (a . b) + (b' . b') + (a . b) + (b . c') = a + b . c'
+module f_mux (output s, input a, input b, input c);
+  wire nc, and1;
+  not NOT1(nc, c);         // nc = ~c
+  and AND1(and1, b, nc);   // bc'
+  or  OR1(s, a, and1);     // a + bc'
+endmodule
+
+3) 
+module f_expressao (output S, input A, input B, input C);
+  wire nA, or1, or2, or3;
+  
+  not NOT1(nA, A);          // nA = A'
+  or  OR1(or1, nA, C);      // (A' + C)
+  or  OR2(or2, A, B);       // (A + B)
+  or  OR3(or3, B, C);       // (B + C)
+  and AND1(S, or1, or2, or3); // (A' + C) . (A + B) . (B + C)
+endmodule
+
+4) 0 1000 0011 0010 1010 0000 0000 0000 000
+
+5 a) FACE(16) ​= F = 1111, A = 1010, C = 1100, E = 1110 = 1111 1010 1100 1110(2)
+1111 1010 1100 1110 >> 2 = 0011 1110 1011 0011
+
+5 b) Quociente = 6 Resto = 19
+
+5 c) a^b = 5^3 = 125 = 01111101(2)
+
+5 d)
+Complemento de 2:
+7 -> 1110101
+6 -> 110101
+5	-> 10101
