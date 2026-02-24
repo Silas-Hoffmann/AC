@@ -1,14 +1,3 @@
-Perguntas: 
-1) Qual o problema de tempo associado a esse tipo de somador ( pense no carry), considere o atraso médio de cada porta lógica de 10 ns.   2) Qual o tempo necessário para a computação de uma soma e do vai um em um somador de 4 bits. 
-
-3) O que seria necessário para um somador de 32 bits ?
- 
-4) Considerando esses tempos acima, calcule a freqüência de operação de um somador de 32 bits.
-
-5) Você consegue propor alguma forma de tornar essa soma mais veloz?
-
-Respostas:
-
 1) O principal problema de tempo no somador ripple-carry é a propagação sequencial do carry: cada estágio depende do carry anterior. Assim, o bit mais significativo e o carry final só ficam prontos após a propagação pelos estágios anteriores.
 
 2) Considerando atraso de 10 ns por porta e somador completo implementado por 2 meias-somas + 1 OR:
