@@ -1,0 +1,32 @@
+Perguntas: 
+1) Qual o problema de tempo associado a esse tipo de somador ( pense no carry), considere o atraso médio de cada porta lógica de 10 ns.   2) Qual o tempo necessário para a computação de uma soma e do vai um em um somador de 4 bits. 
+
+3) O que seria necessário para um somador de 32 bits ?
+ 
+4) Considerando esses tempos acima, calcule a freqüência de operação de um somador de 32 bits.
+
+5) Você consegue propor alguma forma de tornar essa soma mais veloz?
+
+Respostas:
+
+1) O principal problema de tempo no somador ripple-carry é a propagação sequencial do carry: cada estágio depende do carry anterior. Assim, o bit mais significativo e o carry final só ficam prontos após a propagação pelos estágios anteriores.
+
+2) Considerando atraso de 10 ns por porta e somador completo implementado por 2 meias-somas + 1 OR:
+    - c1 = a0.b0 + c0.(a0 xor b0): 3 portas -> 30 ns
+    - cada carry seguinte adiciona 2 portas (AND + OR): +20 ns
+    - para 4 bits: c4 = 30 + 3*20 = 90 ns
+    - soma mais lenta (s3): precisa de c3 (70 ns) + XOR final (10 ns) = 80 ns
+    Logo, em 4 bits, o carry final sai em 90 ns e o bit de soma mais lento em 80 ns.
+
+3) Para 32 bits (mesma lógica):
+    - carry final: c32 = 30 + 31*20 = 650 ns
+    - soma mais lenta (s31): c31 + XOR = (30 + 30*20) + 10 = 640 ns
+
+4) A frequência máxima de operação é aproximadamente o inverso do caminho crítico:
+    fmax ≈ 1/650 ns = 1/(650x10^-9) ≈ 1,54 MHz.
+
+5) Para acelerar a soma, pode-se usar arquiteturas que reduzem a propagação em série do carry, como:
+    - carry-lookahead adder (CLA);
+    - somadores de prefixo (Kogge-Stone, Brent-Kung, etc.);
+    - carry-select adder.
+    Essas soluções diminuem bastante o atraso em comparação ao ripple-carry.
