@@ -8,7 +8,7 @@
 * 🖥️ [Preparação para Avaliações](./AC-1/preparacaoParaAvaliacoes)
 * 📑 [Recuperações](./AC-1/recuperacoes)
 
-# ARQ-I
+# ARQ-II
 
 ### 🚀 Atalhos Rápidos
 * 📚 [Exercícios Práticos](./AC-2/exercicios)
