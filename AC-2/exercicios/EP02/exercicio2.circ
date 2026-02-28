@@ -158,7 +158,10 @@
       <a name="label" val="SL0"/>
     </comp>
     <comp lib="1" loc="(220,300)" name="XOR Gate"/>
-    <comp loc="(370,200)" name="operation"/>
+    <comp loc="(370,200)" name="operation">
+      <a name="label" val="Operation"/>
+      <a name="labelloc" val="south"/>
+    </comp>
     <comp lib="1" loc="(290,130)" name="AND Gate"/>
     <comp lib="0" loc="(390,200)" name="Pin">
       <a name="facing" val="west"/>
