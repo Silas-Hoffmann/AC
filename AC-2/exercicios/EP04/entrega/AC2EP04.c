@@ -20,10 +20,10 @@ int decodificador (char w [10]){
     AoB -> W=X+Y -> E
     nAenB -> W=X’.Y’ -> F
     */
-    struct {
+    struct { // struct com mnemonico e codigo correspondente
         const char *mnemonico;
         int codigo;
-    } tabela[] = {
+    } tabela[] = { // tabela que preenche o struct
         {"A", 0x0},
         {"B", 0x1},
         {"AxB", 0x2},
@@ -45,8 +45,8 @@ int decodificador (char w [10]){
     int total = (int)(sizeof(tabela) / sizeof(tabela[0]));
     int i;
     for (i = 0; i < total; i++) {
-        if (strcmp(w, tabela[i].mnemonico) == 0) {
-            return tabela[i].codigo;
+        if (strcmp(w, tabela[i].mnemonico) == 0) { // encontra o mnemonico na tabela
+            return tabela[i].codigo; // retorna o codigo correspondente
         }
     }
 
@@ -59,49 +59,38 @@ int main() {
     int x = -1, y = -1;
     char w[10] = "buffer";
     scanf("%s", str);
-    //printf("str = %s\n", str);
-    int contador = 0;
-    while (contador < 10 && scanf(" %c", &str[0]) == 1 && str[0] != 'f') {
-        while (str[0] != 'W') {
-            //printf("str[0] = %c\n", str[0]);
-            if (str[0] == 'X') {
+    while (scanf(" %c", &str[0]) == 1 && str[0] != 'f') { // ate encontrar o 'f' de "fim" ou acabar a entrada
+        while (str[0] != 'W') { // ler o 'X' e 'Y' ate achar a instrucao 'W'
+            if (str[0] == 'X') { // se for 'X', ler o valor de X
                 scanf("=%d;", &x);
             }
-            if (str[0] == 'Y') {
+            if (str[0] == 'Y') { // se for 'Y', ler o valor de Y
                 scanf("=%d;", &y);
             }
-            //printf("%d\n", x);
-            //printf("%d\n", y);
-            //printf("%s\n------------\n", w);
-            if (scanf(" %c", &str[0]) != 1 || str[0] == 'f') {
+            if (scanf(" %c", &str[0]) != 1 || str[0] == 'f') { // se encontrar alguma irregularidade, encerrar o programa
                 return 0;
             }
         }
         scanf("=%9[^;];", w);
         if (x > 9) {
-            printf("%c", x+55);
+            printf("%c", x+55); // exibicao como caractere hexadecimal codificado na tabela ASCII
         } else {
-            printf("%c", x+48);
+            printf("%c", x+48); // exibicao como caractere hexadecimal codificado na tabela ASCII
         }
         if (y > 9) {
-            printf("%c", y+55);
+            printf("%c", y+55); // exibicao como caractere hexadecimal codificado na tabela ASCII
         } else {
-            printf("%c", y+48);
+            printf("%c", y+48); // exibicao como caractere hexadecimal codificado na tabela ASCII
         }
 
-    
-        int codigo_w = decodificador(w);
+        int codigo_w = decodificador(w); // encontrar o codigo correspondente ao mnemonico lido
         if (codigo_w >= 0) {
-            printf("%X\n", codigo_w);
+            printf("%X\n", codigo_w); // exibicao do codigo do mnemonico
         } else {
-            printf("w = %s\tcodigo = invalido\n", w);
+            printf("w = %s\tcodigo = invalido\n", w); // nao encontrou o codigo
         }
     
-        w[0] = '\0';
-        contador += 1;
-        if (contador == 10){
-            printf ("Limite 10 entradas (possivel loop infinito)");
-        }
+        w[0] = '\0'; // limpar o buffer para a proxima leitura
     }
     return 0;
 }
