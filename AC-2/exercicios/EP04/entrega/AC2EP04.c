@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 
+static char hex_char(int v) {
+    if (v >= 0 && v <= 9) return (char)('0' + v);
+    if (v >= 10 && v <= 15) return (char)('A' + (v - 10));
+    return '?';
+}
+
 int decodificador (char w [10]){
     /*
     A -> W=X -> 0
@@ -25,7 +31,9 @@ int decodificador (char w [10]){
         int codigo;
     } tabela[] = { // tabela que preenche o struct
         {"A", 0x0},
+        {"CopiaA", 0x0},
         {"B", 0x1},
+        {"CopiaB", 0x1},
         {"AxB", 0x2},
         {"nAxnB", 0x3},
         {"AeBn", 0x4},
@@ -35,6 +43,7 @@ int decodificador (char w [10]){
         {"AonB", 0x8},
         {"UmL", 0x9},
         {"0", 0xA},
+        {"ZeroL", 0xA},
         {"AeB", 0xB},
         {"nAeB", 0xC},
         {"AenB", 0xD},
@@ -55,45 +64,37 @@ int decodificador (char w [10]){
 
 
 int main() {
-    freopen("testeula.ula", "r", stdin);
+    freopen("TESTEULA.ULA", "r", stdin);
     freopen("testeula.hex", "w", stdout);
 
     char str[100];
     int x = -1, y = -1;
-    char w[10] = "buffer";
-    scanf("%s", str);
-    while (scanf(" %c", &str[0]) == 1 && str[0] != 'f') { // ate encontrar o 'f' de "fim" ou acabar a entrada
-        while (str[0] != 'W') { // ler o 'X' e 'Y' ate achar a instrucao 'W'
-            if (str[0] == 'X') { // se for 'X', ler o valor de X
-                scanf("=%d;", &x);
-            }
-            if (str[0] == 'Y') { // se for 'Y', ler o valor de Y
-                scanf("=%d;", &y);
-            }
-            if (scanf(" %c", &str[0]) != 1 || str[0] == 'f') { // se encontrar alguma irregularidade, encerrar o programa
-                return 0;
-            }
-        }
-        scanf("=%9[^;];", w);
-        if (x > 9) {
-            printf("%c", x+55); // exibicao como caractere hexadecimal codificado na tabela ASCII
-        } else {
-            printf("%c", x+48); // exibicao como caractere hexadecimal codificado na tabela ASCII
-        }
-        if (y > 9) {
-            printf("%c", y+55); // exibicao como caractere hexadecimal codificado na tabela ASCII
-        } else {
-            printf("%c", y+48); // exibicao como caractere hexadecimal codificado na tabela ASCII
+    char w[32];
+
+    while (fgets(str, sizeof(str), stdin) != NULL) {
+        if (strncmp(str, "fim", 3) == 0) {
+            break;
         }
 
-        int codigo_w = decodificador(w); // encontrar o codigo correspondente ao mnemonico lido
-        if (codigo_w >= 0) {
-            printf("%X\n", codigo_w); // exibicao do codigo do mnemonico
-        } else {
-            printf("w = %s\tcodigo = invalido\n", w); // nao encontrou o codigo
+        if (sscanf(str, " X=%d", &x) == 1) {
+            continue;
         }
-    
-        w[0] = '\0'; // limpar o buffer para a proxima leitura
+
+        if (sscanf(str, " Y=%d", &y) == 1) {
+            continue;
+        }
+
+        if (sscanf(str, " W=%31[^; \t\r\n]", w) == 1) {
+            int codigo_w = decodificador(w); // encontrar o codigo correspondente ao mnemonico lido
+
+            printf("%c%c", hex_char(x), hex_char(y));
+            if (codigo_w >= 0) {
+                printf("%X\n", codigo_w); // exibicao do codigo do mnemonico
+            } else {
+                printf("w = %s\tcodigo invalido\n", w); // nao encontrou o codigo
+            }
+        }
     }
+
     return 0;
 }
