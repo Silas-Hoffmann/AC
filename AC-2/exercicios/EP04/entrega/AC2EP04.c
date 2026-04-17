@@ -65,7 +65,7 @@ int decodificador (char w [10]){
 
 int main() {
     freopen("TESTEULA.ULA", "r", stdin);
-    freopen("testeula.hex", "w", stdout);
+    freopen("TESTEULA.HEX", "w", stdout);
 
     char str[100];
     int x = -1, y = -1;
