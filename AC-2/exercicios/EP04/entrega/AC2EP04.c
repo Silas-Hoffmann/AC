@@ -64,8 +64,8 @@ int decodificador (char w [10]){
 
 
 int main() {
-    freopen("TESTEULA.ULA", "r", stdin);
-    freopen("TESTEULA.HEX", "w", stdout);
+    freopen("/tmp/TESTEULA.ULA", "r", stdin);
+    freopen("/tmp/TESTEULA.HEX", "w", stdout);
 
     char str[100];
     int x = -1, y = -1;
@@ -95,6 +95,9 @@ int main() {
             }
         }
     }
+
+    fclose(stdin);
+    fclose(stdout);
 
     return 0;
 }
